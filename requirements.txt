@@ -1,0 +1,6 @@
+asyncio
+json
+websockets
+requests
+sys
+colorama
