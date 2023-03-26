@@ -3,6 +3,7 @@ The Zombsroyale Mason Tool is a Tool used for the ingame Websocket of the game Z
 
 Inspired by https://github.com/ChrxnZ/ZR-Account-Controller
 
+Customization of platform, version and region coming soon
 
 
 ## How to use it? 
