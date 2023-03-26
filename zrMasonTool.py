@@ -7,7 +7,7 @@ from colorama import Fore, Style
 
 ws_url = "wss://mason-ipv4.zombsroyale.io/gateway/?EIO=4&transport=websocket"
 
-userKey = "3f5caf57f433fc5800304b416305cfe04de2727e7033b5fb"
+userKey = "ChangeHere"
 status = "online"
 mode = "Solo"
 
