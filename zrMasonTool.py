@@ -15,7 +15,7 @@ connect_messages = {
     "setPlat": '42["setPlatform", "android"]',
     "setVer": '42["setVersion", "4.7.0"]',
     "setName": '42["setName", "Player"]',
-    "login": f'42["login", "null"]',
+    "login": f'42["login", null]',
     "status": f'42["setStatus", "{status}"]',
 }
 
@@ -116,7 +116,7 @@ async def main():
             else:
                 try:
 
-                    if connect_messages["login"] == '42["login", "null"]':
+                    if connect_messages["login"] == '42["login", null]':
                         print(Fore.RED + "No account key set" + Style.RESET_ALL)
                         continue
 
