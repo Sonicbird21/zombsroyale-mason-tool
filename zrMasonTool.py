@@ -28,15 +28,6 @@ party_messages = {
 
 party_leave_message = '42["leaveParty"]'
 
-async def connect():
-    async with websockets.connect(ws_url) as ws:
-        for message_type, message in connect_messages.items():
-            await ws.send(message)
-            print(Fore.YELLOW + f"Sent message: {message}" + Style.RESET_ALL)
-            if message_type != "setName":
-                response = await ws.recv()
-                print(Fore.GREEN + f"Received response: {response}" + Style.RESET_ALL)
-        return ws
 
 async def create_party(ws):
     for message_type, message in party_messages.items():
