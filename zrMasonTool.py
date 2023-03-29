@@ -1,5 +1,6 @@
 import asyncio
 import json
+import re
 import websockets
 import requests
 import sys
@@ -7,9 +8,7 @@ from colorama import Fore, Style
 
 ws_url = "wss://mason-ipv4.zombsroyale.io/gateway/?EIO=4&transport=websocket"
 
-
 status = "online"
-mode = "Solo"
 
 connect_messages = {
     "setPlat": '42["setPlatform", "android"]',
@@ -22,8 +21,8 @@ connect_messages = {
 party_messages = {
     "createParty": '42["createParty"]',
     "setPartyVer": '42["setPartyVersion", "4.7.0"]',
-    "setPartyGMode": f'42["setPartyGameMode", "{mode}"]',
-    "setPartyReg": '42["setPartyRegion", "vultr-singapore"]'
+    "setPartyGMode": f'42["setPartyGameMode", null]',
+    "setPartyReg": '42["setPartyRegion", "vultr-frankfurt"]',
 }
 
 party_leave_message = '42["leaveParty"]'
@@ -42,6 +41,16 @@ def check_userKey(userKey):
     connect_messages["login"] = f'42["login", "{userKey}"]'
     print(Fore.GREEN + f"Account Key set (Current Key: '{userKey}') [User:{friend_code}]" + Style.RESET_ALL)
     return True
+
+async def set_gamemode(mode):
+    if mode == "1":
+        party_messages["setPartyGMode"] = '42["setPartyGameMode", "Solo"]'
+    
+    elif mode == "2":
+        party_messages["setPartyGMode"] = '42["setPartyGameMode", "Duo"]'
+    
+    elif mode == "3":
+        party_messages["setPartyGMode"] = '42["setPartyGameMode", "Squad"]'
     
 
 async def create_party(ws):
@@ -51,7 +60,12 @@ async def create_party(ws):
             print(Fore.YELLOW + f"Sent message: {message}" + Style.RESET_ALL)
             response = await ws.recv()
             print(Fore.GREEN + f"Received response: {response}" + Style.RESET_ALL)
-    print(Fore.GREEN + f"{mode}-Party Created" + Style.RESET_ALL)
+    pattern = r'setPartyGameMode", "(\w+)"'
+    match = re.search(pattern, party_messages["setPartyGMode"])
+    if match:
+        mode = match.group(1)
+    print(Fore.GREEN + f"Party Created ({mode})" + Style.RESET_ALL) 
+    
 
     global created_party
     created_party = True
@@ -93,6 +107,7 @@ async def main():
   #+#           #+#    #+#      #+#       #+#     #+#    #+#     #+#    #+#     
 #########       ########       ###       ###     #########       ########       
     ''')
+    print("v.0.4 Dev Build")
     print("\n")
     print("Available actions:")
     print("1 - Connect")
@@ -145,6 +160,16 @@ async def main():
         elif user_input == "2":
             try:
                 if ws:
+                    print("Available Gamemodes:")
+                    print("1 - Solo")
+                    print("2 - Duo")
+                    print("3 - Squad")
+                    print("\n")
+                    game_mode = input(Fore.WHITE + "Enter gamemode: ")
+                    if game_mode not in ["1", "2", "3"]:
+                        print(Fore.RED + "Invalid input, try again" + Style.RESET_ALL)
+                        continue
+                    await set_gamemode(game_mode)
                     await create_party(ws)
                 else:
                     print(Fore.RED + "Not connected to WebSocket" + Style.RESET_ALL)
