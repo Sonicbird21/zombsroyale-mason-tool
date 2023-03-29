@@ -107,7 +107,7 @@ async def main():
   #+#           #+#    #+#      #+#       #+#     #+#    #+#     #+#    #+#     
 #########       ########       ###       ###     #########       ########       
     ''')
-    print("v.0.4 Dev Build")
+    print("v.0.4")
     print("\n")
     print("Available actions:")
     print("1 - Connect")
