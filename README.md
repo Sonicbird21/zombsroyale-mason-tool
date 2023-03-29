@@ -8,6 +8,9 @@ Customization of platform, version and region coming soon
 
 ## How to use it? 
 
+Install all dependencies with pip if needed (Not necessary in most cases)
+```pip install -r requirements.txt```
+
 Simply run the zrMasonTool.py python file with python.
 ```python zrMasonTool.py```
 
