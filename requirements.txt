@@ -1,5 +1,5 @@
 asyncio
-re
+regex
 json
 websockets
 requests
