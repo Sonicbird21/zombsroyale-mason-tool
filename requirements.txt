@@ -1,5 +1,6 @@
 asyncio
 re
+json
 websockets
 requests
 sys
